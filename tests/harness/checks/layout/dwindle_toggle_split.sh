@@ -41,7 +41,7 @@ wait_for_arrangement() {
   return 1
 }
 
-# Outside Dwindle the action is refused and changes nothing.
+# Outside Dwindle the action is refused.
 spawn_client toggle-split-a
 wait_for_count 1
 if "$UMBRIEL" msg layout-toggle-split > /dev/null 2>&1; then
@@ -74,10 +74,10 @@ echo "layout-toggle-split stacks a side by side pair"
 
 # A third window and a config reload each arrange again; the toggled split must not flip back.
 "$UMBRIEL" msg config-reload > /dev/null
-sleep 0.2 # real time: a flip back would only show after the arrange has run
+"$UMBRIEL" settle
 wait_for_arrangement stacked toggle-split-a toggle-split-b
 spawn_client toggle-split-c
 wait_for_count 3
-sleep 0.2 # real time: a flip back would only show after the arrange has run
+"$UMBRIEL" settle
 wait_for_arrangement stacked toggle-split-a toggle-split-b
 echo "A toggled split survives arrange with preserve_split off"
